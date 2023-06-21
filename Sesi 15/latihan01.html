@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jquery AJAX</title>
+    <style>
+        table,tr,td{
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 5px;
+        };
+    </style>
+</head>
+<body>
+
+    <div style="margin-bottom: 2px;">
+        Nama :
+        <input type="text" id="txNama">
+    </div>
+    <div style="margin-bottom: 5px;">
+        Email :
+        <input type="text" id="txEmail">
+    </div>
+    <div id="tampildata"></div>
+
+    <script src="code.jquery.com_jquery-3.7.0.min.js"></script>
+    <script>
+        $(function(){
+            let urtarget = "https://webpro.ptov.my.id/api/curduser.php?aksi=get";
+            
+            $.get({
+                url: urtarget,
+                success: function(dta, status, xhr){
+                    let tx = '<table><tr style="background-color: aqua;"><td style="text-align: center;">No</td><td>Nama Lengkap</td><td>Email</td><td>Username</td></tr>';
+                    let nox = 1
+                    for(let i=0; i< dta.affected; i++){
+                        tx += '<tr>';
+                        tx += '<td style="text-align: center;">'+nox+'</td>';
+                        tx += '<td>'+dta.isi[i][0]+'</td>';
+                        tx += '<td>'+dta.isi[i][1]+'</td>';
+                        tx += '<td>'+dta.isi[i][2]+'</td>';
+                        tx += '</tr>';
+                        nox++
+                    }
+                    tx += '</table>';
+                    $("#tampildata").html(tx);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
